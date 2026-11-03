@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rakit Teks Pelangi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700&family=Poppins:wght@700;800&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+<div class="bar"><button id="bmenu" hidden>← Menu</button></div>
+<section id="menu">
+<img class="logo" src="logo.svg" alt="Logo Rakit Teks Pelangi">
+<div class="mt">
+<h1><span>MERAKIT</span><br>TEKS<br>EKSPLANASI.</h1>
+<p class="byline">By : Rysnanto</p>
+<div class="menu-actions">
+<button class="go" id="start">Mulai Main</button>
+<button id="bfs">Layar penuh</button>
+<button class="about-trigger" id="about-open" type="button" aria-label="Tentang aplikasi" aria-haspopup="dialog" aria-controls="about">?</button>
+</div>
+<button class="study-trigger" id="study-open" type="button" aria-haspopup="dialog" aria-controls="study">BAHAN AJAR</button>
+</div>
+</section>
+<section class="lesson-view" id="lesson" hidden tabindex="0" aria-label="Materi teks eksplanasi">
+<header class="lesson-top">
+<span class="lesson-kicker">MATERI PEMBELAJARAN</span>
+<span id="lesson-count" aria-live="polite"></span>
+</header>
+<div class="lesson-content" id="lesson-content">
+<h1 id="lesson-title"></h1>
+<div id="lesson-body"></div>
+</div>
+<footer class="lesson-bottom">
+<div class="lesson-progress" aria-hidden="true"><span id="lesson-progress"></span></div>
+<button id="lesson-next" type="button">Klik untuk lanjut <span aria-hidden="true">→</span></button>
+</footer>
+</section>
+<div class="about-overlay" id="about" hidden>
+<section class="about-card" role="dialog" aria-modal="true" aria-labelledby="about-title">
+<button class="about-close" id="about-close" type="button" aria-label="Tutup informasi">×</button>
+<h2 id="about-title">TENTANG APLIKASI</h2>
+<p>Aplikasi ini adalah permainan belajar untuk menyusun teks eksplanasi. Pilih kalimat yang tepat di setiap langkah. Setiap jawaban benar menambahkan satu warna pada pelangi. Selesaikan semua langkah untuk melihat teks eksplanasimu tersusun!</p>
+<button class="about-dismiss" id="about-dismiss" type="button">Tutup</button>
+</section>
+</div>
+<div class="study-overlay" id="study" hidden>
+<section class="study-card" role="dialog" aria-modal="true" aria-labelledby="study-title">
+<header class="study-header">
+<h2 id="study-title">BAHAN AJAR</h2>
+<div class="study-controls">
+<a class="study-download" href="bahanajar.pdf" target="_blank" rel="noopener">Buka PDF</a>
+<a class="study-download" href="bahanajar.pdf" download>Unduh</a>
+<button class="study-close" id="study-close" type="button" aria-label="Tutup bahan ajar">×</button>
+</div>
+</header>
+<div class="study-reader">
+<p class="study-status" id="study-status" aria-live="polite">Buka bahan ajar untuk mulai membaca.</p>
+<div class="study-book" id="study-book" aria-label="Buku bahan ajar">
+<div class="study-page study-left-page" id="study-left-page">
+<canvas id="study-left-canvas" aria-label="Halaman kiri bahan ajar"></canvas>
+<span class="study-page-number" id="study-left-number"></span>
+</div>
+<div class="study-page study-right-page" id="study-right-page">
+<canvas id="study-right-canvas" aria-label="Halaman kanan bahan ajar"></canvas>
+<span class="study-page-number" id="study-right-number"></span>
+</div>
+<div class="study-turn-sheet" id="study-turn-sheet" aria-hidden="true">
+<div class="study-turn-face study-turn-front"><canvas id="study-turn-front"></canvas></div>
+<div class="study-turn-face study-turn-back"><canvas id="study-turn-back"></canvas></div>
+</div>
+</div>
+<nav class="study-nav" aria-label="Navigasi halaman bahan ajar">
+<button id="study-prev" type="button" aria-label="Halaman sebelumnya">‹</button>
+<span id="study-page-indicator" aria-live="polite">- / -</span>
+<button id="study-next" type="button" aria-label="Halaman berikutnya">›</button>
+</nav>
+</div>
+</section>
+</div>
+<main id="game" hidden>
+<span class="stars" id="stars" aria-live="polite">⭐ 0</span>
+<h1>Rakit Teks Pelangi</h1>
+<p class="sub">Pilih kalimat yang tepat di setiap langkah. Setiap jawaban benar menambah satu warna pelangi.</p>
+
+<svg viewBox="0 0 400 230" role="img" aria-label="Pelangi yang bertambah warnanya setiap kali jawabanmu benar">
+<circle cx="52" cy="48" r="24" fill="#ffb81c"/>
+<g stroke="#ffb81c" stroke-width="5" stroke-linecap="round"><path d="M52 10v8M52 78v8M14 48h8M82 48h8M25 21l6 6M73 69l6 6M79 21l-6 6M31 69l-6 6"/></g>
+<g id="arcs"></g>
+<g fill="#fff" opacity=".95"><circle cx="34" cy="206" r="16"/><circle cx="56" cy="200" r="20"/><circle cx="80" cy="208" r="14"/><rect x="34" y="204" width="46" height="18" rx="9"/></g>
+<g fill="#fff" opacity=".95"><circle cx="322" cy="206" r="16"/><circle cx="344" cy="200" r="20"/><circle cx="368" cy="208" r="14"/><rect x="322" y="204" width="46" height="18" rx="9"/></g>
+</svg>
+
+<section class="card" id="play">
+<div class="step" id="step"></div>
+<h2 id="goal"></h2>
+<div id="opts"></div>
+<div class="fb" id="fb" aria-live="polite"></div>
+<button class="btn" id="nx" hidden>Lanjut</button>
+</section>
+
+<section class="card" id="done" hidden>
+<p class="big" id="rank"></p>
+<p id="score"></p>
+<p>Kata hubung dalam teksmu:<br><span class="chip">sehingga</span><span class="chip">setelah itu</span><span class="chip">akibatnya</span><span class="chip">jadi</span></p>
+<button class="btn" id="again">Main lagi</button>
+</section>
+
+<section class="card">
+<h2>Teks eksplanasimu</h2>
+<div class="txt" id="txt"><p class="placeholder">Kalimat yang kamu pilih akan tersusun di sini.</p></div>
+<div class="leg"><span><i class="green"></i>Pernyataan umum</span><span><i class="blue"></i>Deretan penjelas</span><span><i class="red"></i>Simpulan</span></div>
+</section>
+</main>
+</body>
+</html>
